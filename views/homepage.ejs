@@ -5,27 +5,25 @@
 <article class="dashboard" ng-switch on="step">
   <div class="tabs">
     <ul>
-        
-        <li ng-repeat="ip in ips" ng-class="{active: step==ip.step}"
-        ng-click="step=ip.step"> 
-            {{ip.ip}}
+        <li ng-repeat="ip in ips" 
+            ng-class="{active: step==ip.step}"
+            ng-click="$parent.step=ip.step"> 
+            {{ ip.ip }}
         </li>
 
-      <!--
-      <li ng-class="{active: step==0}" ng-click="step=0">255.255.255.255</li>
+      
+      <!-- <li ng-class="{active: step==0}" ng-click="step=0">255.255.255.255</li>
       <li ng-class="{active: step==1}" ng-click="step=1">255.255.255.255</li>
       <li ng-class="{active: step==2}" ng-click="step=2">255.255.255.255</li>
-      <li ng-class="{active: step==3}" ng-click="step=3">255.255.255.255</li>
-      -->
+      <li ng-class="{active: step==3}" ng-click="step=3">255.255.255.255</li> -->
       
     </ul>
   </div>
   <div class="main-content">
-    
-    <div class="window" ng-switch-when="0">
-      <p ng-repeat='k in ips[0].keys' >{{k.key}}<br><span>Tue, 25 Nov 2014 20:03:11</span></p>
+    <div class="window" ng-repeat="ip in ips" ng-show="step==ip.step">
+      <p ng-repeat='k in ip.keys' >{{ k.key }}<br><span>Tue, 25 Nov 2014 20:03:11</span></p>
     </div>
-    <div class="window" ng-switch-when="1">
+    <!-- <div class="window" ng-switch-when="1">
       <p>2<br><span>Tue, 25 Nov 2014 20:03:11</span></p>
     </div>
     <div class="window" ng-switch-when="2">
@@ -33,7 +31,7 @@
     </div>
     <div class="window" ng-switch-when="3">
       <p>4<br><span>Tue, 25 Nov 2014 20:03:11</span></p>
-    </div>
+    </div> -->
     <div class="buttons">
       <button class="guardar">Guardar</button>
       <button class="eliminar">Eliminar</button>
