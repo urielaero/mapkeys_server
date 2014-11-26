@@ -8,30 +8,18 @@
         <li ng-repeat="ip in ips" 
             ng-class="{active: step==ip.step}"
             ng-click="$parent.step=ip.step"> 
-            {{ ip.ip }}
+            <p ng-class="{online: true}">{{ ip.ip }}</p>
         </li>
-
-      
-      <!-- <li ng-class="{active: step==0}" ng-click="step=0">255.255.255.255</li>
-      <li ng-class="{active: step==1}" ng-click="step=1">255.255.255.255</li>
-      <li ng-class="{active: step==2}" ng-click="step=2">255.255.255.255</li>
-      <li ng-class="{active: step==3}" ng-click="step=3">255.255.255.255</li> -->
-      
     </ul>
   </div>
   <div class="main-content">
-    <div class="window" ng-repeat="ip in ips" ng-show="step==ip.step">
-      <p ng-repeat='k in ip.keys' >{{ k.key }}<br><span ng-bind='time(k.time)'>Tue, 25 Nov 2014 20:03:11</span></p>
+    <div class="window" ng-repeat="ip in ips" ng-show="step==ip.step" scroll-glue>
+      <p ng-repeat="k in ip.keys"
+         ng-model="res"
+         ng-init="res=keyMod(k)"
+         ng-show="res">{{ res }}<br><span ng-bind="time(k.time)"></span></p>
     </div>
-    <!-- <div class="window" ng-switch-when="1">
-      <p>2<br><span>Tue, 25 Nov 2014 20:03:11</span></p>
-    </div>
-    <div class="window" ng-switch-when="2">
-      <p>3<br><span>Tue, 25 Nov 2014 20:03:11</span></p>
-    </div>
-    <div class="window" ng-switch-when="3">
-      <p>4<br><span>Tue, 25 Nov 2014 20:03:11</span></p>
-    </div> -->
+    <p class="count">Teclas presionadas: {{ counter }}</p>
     <div class="buttons">
       <button class="guardar">Guardar</button>
       <button class="eliminar">Eliminar</button>
