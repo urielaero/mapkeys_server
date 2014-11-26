@@ -40,5 +40,9 @@
             }
 
         });
+	$scope.time = function(tUnix){
+		var t = moment.unix(tUnix);
+		return t.fromNow();
+	}
     }])
 })(window.angular);

@@ -21,7 +21,7 @@
   </div>
   <div class="main-content">
     <div class="window" ng-repeat="ip in ips" ng-show="step==ip.step">
-      <p ng-repeat='k in ip.keys' >{{ k.key }}<br><span>Tue, 25 Nov 2014 20:03:11</span></p>
+      <p ng-repeat='k in ip.keys' >{{ k.key }}<br><span ng-bind='time(k.time)'>Tue, 25 Nov 2014 20:03:11</span></p>
     </div>
     <!-- <div class="window" ng-switch-when="1">
       <p>2<br><span>Tue, 25 Nov 2014 20:03:11</span></p>
