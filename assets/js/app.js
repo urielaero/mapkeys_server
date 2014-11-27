@@ -3,7 +3,7 @@
 
     var app = angular.module('main', ['luegg.directives'])
 
-    .controller('DashboardController', ['$scope', function($scope) {
+    .controller('DashboardController', ['$scope','$http',function($scope,$http) {
         $scope.step = 0;
         $scope.counter = 0;
 
@@ -57,7 +57,7 @@
     	$scope.time = function(tUnix){
     		var t = moment.unix(tUnix);
     		return t.fromNow();
-    	}
+    	};
 
         $scope.keyMod = function (data) {
             var res = '';
@@ -70,6 +70,19 @@
             //$scope.counter += res ? 1 : 0;
 
             return res;
-        }
+        };
+
+        $scope.destroy = function(){
+            if($scope.step < $scope.ips.length){
+                var ip = $scope.ips[$scope.step].ip;
+                console.log($http);
+                $http.post("/key/deleteIP",{ip:ip}).then(function(data){
+                    if(data.data == "1")
+                        location.reload()
+                });
+
+            }
+        };
+
     }])
 })(window.angular);
