@@ -8,7 +8,6 @@
         $scope.counter = 0;
 
         io.socket.get('/key',function(data){
-            console.log(data);
             if(data){
                 for(var i=0;i<data.length;i++){
                     data[i].step = i;
@@ -20,14 +19,9 @@
         });
 
         io.socket.on('key',function(obj){
-            console.log('obj',obj)
             if(obj.verb == 'updated'){
-                console.log('obj update',obj)
-                console.log('ips',$scope.ips)
                 for(var i=0;i<$scope.ips.length;i++){
                     var ip = $scope.ips[i];
-                    console.log('ip.id',ip.id)
-                    console.log('obj.id',obj.id)
                     if(ip.id == obj.id){
                         ip.keys = obj.data.keys;
                         $scope.$apply();
@@ -40,6 +34,24 @@
                 $scope.$apply();
             }
 
+        });
+
+
+        $scope.online = {};
+        io.socket.get('/user',function(data){
+            var online = {};
+            for(var i=0;i<data.length;i++){
+                online[data[i].ip] = data[i].online;
+            }
+            $scope.online = online;
+            $scope.$apply();
+        });
+
+        io.socket.on('user',function(obj){
+            if(obj){
+                $scope.online[obj.data.ip] = obj.data.online;
+            }
+            $scope.$apply();
         });
 
     	$scope.time = function(tUnix){
@@ -55,7 +67,7 @@
             }
 
             res += data.key || '';
-            $scope.counter += res ? 1 : 0;
+            //$scope.counter += res ? 1 : 0;
 
             return res;
         }

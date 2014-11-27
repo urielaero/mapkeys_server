@@ -1,7 +1,20 @@
 var net = require('net');
 
 net.createServer(function(socket){
+
     socket.name = socket.remoteAddress;
+
+    var user = {
+        ip:socket.name
+    }
+
+    User.findOrCreate(user,user,function(e,u){
+        u.online = true;
+        User.publishCreate(u);
+        u.save(function(err){
+            //pass 
+        });
+    });
    
     socket.on('data',function(data){
         var objs = data.toString();
@@ -30,6 +43,13 @@ net.createServer(function(socket){
 
     socket.on('end',function(){
         console.log('fuera');
+        User.findOne({ip:socket.name},function(err,u){
+            u.online = false;
+            User.publishCreate(u);
+            u.save(function(err){
+            
+            });
+        })
     });
 
 
