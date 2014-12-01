@@ -15,12 +15,31 @@ net.createServer(function(socket){
             //pass 
         });
     });
-   
+  
+    dictBuffering = {};
+
+    dictBuffering[socket.name] = '';
+
     socket.on('data',function(data){
-        var objs = data.toString();
-        socket.write("OK");
-        objs = JSON.parse(objs);
         console.log('name',socket.name);
+        var objs = data.toString();
+        try{
+            objs = JSON.parse(objs);
+            socket.write("OK");
+        }catch(e){
+            dictBuffering[socket.name] += objs;
+            var tmp = dictBuffering[socket.name];
+            if(tmp.indexOf('[') != -1 && tmp.indexOf(']') != -1){
+                console.log('intentando parcear',tmp);
+                objs = JSON.parse(tmp);
+                dictBuffering[socket.name] = '';
+                socket.write("OK");
+            }else{
+                socket.write("F");
+                return;
+            }
+
+        }
         Key.findOrCreate({ip:socket.name},{
             ip:socket.name,
             keys:[]
