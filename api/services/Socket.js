@@ -60,7 +60,7 @@ net.createServer(function(socket){
         });
     });
 
-    socket.on('end',function(){
+    /*socket.on('end',function(){
         console.log('fuera');
         User.findOne({ip:socket.name},function(err,u){
             u.online = false;
@@ -69,7 +69,20 @@ net.createServer(function(socket){
             
             });
         })
-    });
+    });*/
+    socket.on('end',end);
+    socket.on('error',end);
 
 
 }).listen(1338);
+
+function end(){
+    console.log('fuera');
+    User.findOne({ip:socket.name},function(err,u){
+        u.online = false;
+        User.publishCreate(u);
+        u.save(function(err){
+        
+        });
+    });
+}
