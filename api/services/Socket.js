@@ -70,15 +70,21 @@ net.createServer(function(socket){
             });
         })
     });*/
-    socket.on('end',end);
-    socket.on('error',end);
+
+    socket.on('end',function(){
+        end(socket.name);
+    });
+
+    socket.on('error',function(){
+        end(socket.name);
+    });
 
 
 }).listen(1338);
 
-function end(){
+function end(name){
     console.log('fuera');
-    User.findOne({ip:socket.name},function(err,u){
+    User.findOne({ip:name},function(err,u){
         u.online = false;
         User.publishCreate(u);
         u.save(function(err){
