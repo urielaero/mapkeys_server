@@ -18,10 +18,10 @@
          ng-model="res"
          ng-init="res=keyMod(k)"
          ng-show="res">{{ res }}<br><span ng-bind="time(k.time)"></span></p>
-        <p class="count">Teclas presionadas: {{ ip.keys.length}}</p>
+      <p class="count">Teclas presionadas: {{ ip.keys.length}}</p>
     </div>
     <div class="buttons">
-      <button class="guardar">Guardar</button>
+      <!-- <button class="guardar">Guardar</button> -->
       <button class="eliminar" ng-click="destroy()">Eliminar</button>
     </div>
     

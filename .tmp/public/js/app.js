@@ -67,7 +67,6 @@
             }
 
             res += data.key || '';
-            //$scope.counter += res ? 1 : 0;
 
             return res;
         };
@@ -80,7 +79,6 @@
                     if(data.data == "1")
                         location.reload()
                 });
-
             }
         };
 
